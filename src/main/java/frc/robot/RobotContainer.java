@@ -60,8 +60,8 @@ public class RobotContainer {
       )
       .whenReleased(
         new ParallelCommandGroup(
-          new InstantCommand(shooterSubsystem::stopKicker),
-          new InstantCommand(indexerSubsystem::stopConveyor),
+          new InstantCommand(shooterSubsystem::kickerStop),
+          new InstantCommand(indexerSubsystem::conveyorStop),
         )
       );
 
@@ -75,7 +75,7 @@ public class RobotContainer {
       )
       .whenReleased(
         new ParallelCommandGroup(
-          new InstantCommand(shooterSubsystem::stopKicker),
+          new InstantCommand(shooterSubsystem::kickerStop),
           new InstantCommand(indexerSubsystem::conveyorStop),
         )
       );
