@@ -21,15 +21,15 @@ public class ShooterSubsystem extends SubsystemBase {
     private final WPI_VictorSPX flywheelMotor = new WPI_VictorSPX(6);
     private final CANSparkMax kickerMotor = new CANSparkMax(7, CANSparkMax.MotorType.kBrushless);
 
-    private double kickerModifier;
+    private double flywheelModifier;
 
     public ShooterSubsystem() {
-        SmartDashboard.putNumber("Kicker Modifier", 0.5);
+        SmartDashboard.putNumber("Flywheel Modifier", 0.5);
     }
 
     @Override
     public void periodic() {
-        kickerModifier = SmartDashboard.getNumber("Kicker Modifier", 0.5);
+        flywheelModifier = SmartDashboard.getNumber("Flywheel Modifier", 0.5);
     }
 
     public void kickerMove() {
@@ -37,7 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void flywheelShoot() {
-        flywheelMotor.set(Constants.flywheelSpeed * kickerModifier);
+        flywheelMotor.set(Constants.flywheelSpeed * flywheelModifier);
     }
 
 }
