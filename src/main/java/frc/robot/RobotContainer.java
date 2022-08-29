@@ -5,10 +5,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.Indexer.Waiting;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Indexer.Waiting;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -24,6 +33,7 @@ public class RobotContainer {
 
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   Joystick leftStick = new Joystick(0);
   Joystick rightStick = new Joystick(1);
@@ -68,7 +78,7 @@ public class RobotContainer {
       .whenReleased(
         new ParallelCommandGroup(
           new InstantCommand(shooterSubsystem::kickerStop),
-          new InstantCommand(indexerSubsystem::conveyorStop),
+          new InstantCommand(indexerSubsystem::conveyorStop)
         )
       );
 
@@ -77,23 +87,25 @@ public class RobotContainer {
       .whileHeld(
         new ParallelCommandGroup(
           new InstantCommand(shooterSubsystem::kickerReverse),
-          new InstantCommand(indexerSubsystem::conveyorReverse)
+          new InstantCommand(indexerSubsystem::conveyorReverse),
+          new InstantCommand(intakeSubsystem::intakeReverse)
         )
       )
       .whenReleased(
         new ParallelCommandGroup(
           new InstantCommand(shooterSubsystem::kickerStop),
           new InstantCommand(indexerSubsystem::conveyorStop),
+          new InstantCommand(intakeSubsystem::intakeStop)
         )
       );
 
       // Intake
       new JoystickButton(gamepad, Button.kB.value)
         .whileHeld(
-          new InstantCommand()
+          new InstantCommand(intakeSubsystem::intakeMove)
         )
         .whenReleased(
-          new InstantCommand()
+          new InstantCommand(intakeSubsystem::intakeStop)
         );
   }
 
