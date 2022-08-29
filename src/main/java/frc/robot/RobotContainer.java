@@ -25,9 +25,10 @@ public class RobotContainer {
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
-  Joystick leftStick = new Joystick(1);
-  Joystick rightStick = new Joystick(2);
-  XboxController gamepad = new XboxController(3);
+  Joystick leftStick = new Joystick(0);
+  Joystick rightStick = new Joystick(1);
+
+  XboxController gamepad = new XboxController(2);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -48,7 +49,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(gamepad, 1)
+
+    // Move ball forward
+    new JoystickButton(gamepad, Button.kY.value)
       .whileHeld(
         new ParallelCommandGroup(
           new InstantCommand(shooterSubsystem::kickerMove),
@@ -59,6 +62,21 @@ public class RobotContainer {
         new ParallelCommandGroup(
           new InstantCommand(shooterSubsystem::stopKicker),
           new InstantCommand(indexerSubsystem::stopConveyor),
+        )
+      );
+
+    // Reverse ball
+    new JoystickButton(gamepad, Button.kX.value)
+      .whileHeld(
+        new ParallelCommandGroup(
+          new InstantCommand(shooterSubsystem::kickerReverse),
+          new InstantCommand(indexerSubsystem::conveyorReverse)
+        )
+      )
+      .whenReleased(
+        new ParallelCommandGroup(
+          new InstantCommand(shooterSubsystem::stopKicker),
+          new InstantCommand(indexerSubsystem::conveyorStop),
         )
       );
   }
