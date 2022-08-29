@@ -86,6 +86,15 @@ public class RobotContainer {
           new InstantCommand(indexerSubsystem::conveyorStop),
         )
       );
+
+      // Intake
+      new JoystickButton(gamepad, Button.kB.value)
+        .whileHeld(
+          new InstantCommand()
+        )
+        .whenReleased(
+          new InstantCommand()
+        );
   }
 
 }
