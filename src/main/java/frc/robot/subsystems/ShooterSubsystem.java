@@ -44,8 +44,12 @@ public class ShooterSubsystem extends SubsystemBase {
         kickerMotor.set(0);
     }
 
-    public void flywheelShoot() {
-        flywheelMotor.set(Constants.flywheelSpeed * flywheelModifier);
+    public void flywheelShoot(double speed) {
+        flywheelMotor.set(speed * flywheelModifier);
+    }
+
+    public void flywheelStop() {
+        flywheelModifier.set(0);
     }
 
 }

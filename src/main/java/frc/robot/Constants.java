@@ -7,5 +7,4 @@ package frc.robot;
 public final class Constants {
     public static final double conveyorSpeed = 0.5;
     public static final double kickerSpeed = 0.5;
-    public static final double flywheelSpeed = 10;
 }

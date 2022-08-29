@@ -38,6 +38,13 @@ public class RobotContainer {
     configureButtonBindings();
 
     indexerSubsystem.setDefaultCommand(new Waiting(indexerSubsystem));
+
+    // Using trigger to shoot
+    shooterSubsystem.setDefaultCommand(
+      new RunCommand(
+        () -> shooterSubsystem.flywheelShoot(gamepad.getRightTriggerAxis()), shooterSubsystem
+      )
+    );
   }
 
   /**
