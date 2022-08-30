@@ -70,43 +70,38 @@ public class RobotContainer {
 
     // Move ball forward
     new JoystickButton(gamepad, Button.kY.value)
-      .whileHeld(
-        new ParallelCommandGroup(
-          new InstantCommand(shooterSubsystem::kickerMove),
-          new InstantCommand(indexerSubsystem::conveyorForward)
-        )
-      )
+      .whenPressed(
+        new InstantCommand(shooterSubsystem::kickerMove, shooterSubsystem)
+        .alongWith(new InstantCommand(indexerSubsystem::conveyorForward, indexerSubsystem)))
+
       .whenReleased(
-        new ParallelCommandGroup(
-          new InstantCommand(shooterSubsystem::kickerStop),
-          new InstantCommand(indexerSubsystem::conveyorStop)
-        )
-      );
+        new InstantCommand(shooterSubsystem::kickerStop, shooterSubsystem)
+        .alongWith(new InstantCommand(indexerSubsystem::conveyorStop, indexerSubsystem)));
+
 
     // Reverse ball
     new JoystickButton(gamepad, Button.kX.value)
-      .whileHeld(
+      .whenPressed(
         new ParallelCommandGroup(
-          new InstantCommand(shooterSubsystem::kickerReverse),
-          new InstantCommand(indexerSubsystem::conveyorReverse),
-          new InstantCommand(intakeSubsystem::intakeReverse)
+          new InstantCommand(shooterSubsystem::kickerReverse, shooterSubsystem),
+          new InstantCommand(indexerSubsystem::conveyorReverse, indexerSubsystem),
+          new InstantCommand(intakeSubsystem::intakeReverse, intakeSubsystem)
         )
       )
       .whenReleased(
         new ParallelCommandGroup(
-          new InstantCommand(shooterSubsystem::kickerStop),
-          new InstantCommand(indexerSubsystem::conveyorStop),
-          new InstantCommand(intakeSubsystem::intakeStop)
+          new InstantCommand(shooterSubsystem::kickerStop, shooterSubsystem),
+          new InstantCommand(indexerSubsystem::conveyorStop, indexerSubsystem),
+          new InstantCommand(intakeSubsystem::intakeStop, intakeSubsystem)
         )
       );
 
       // Intake
       new JoystickButton(gamepad, Button.kB.value)
-        .whileHeld(
-          new InstantCommand(intakeSubsystem::intakeMove)
-        )
+        .whenPressed(
+          new InstantCommand(intakeSubsystem::intakeMove, intakeSubsystem))
         .whenReleased(
-          new InstantCommand(intakeSubsystem::intakeStop)
+          new InstantCommand(intakeSubsystem::intakeStop, intakeSubsystem)
         );
   }
 
