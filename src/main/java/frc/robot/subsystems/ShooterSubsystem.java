@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
     
-    private final WPI_VictorSPX flywheelMotor = new WPI_VictorSPX(6);
-    private final CANSparkMax kickerMotor = new CANSparkMax(7, CANSparkMax.MotorType.kBrushless);
+    private final WPI_VictorSPX flywheelMotor = new WPI_VictorSPX(Constants.CANIds.shooterMotor);
+    private final CANSparkMax kickerMotor = new CANSparkMax(Constants.CANIds.kickerMotor, CANSparkMax.MotorType.kBrushless);
 
     private double flywheelModifier;
 

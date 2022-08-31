@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IndexerSubsystem extends SubsystemBase {
 
-    private final CANSparkMax conveyorMotor = new CANSparkMax(7, CANSparkMax.MotorType.kBrushless);
+    private final CANSparkMax conveyorMotor = new CANSparkMax(Constants.CANIds.conveyorMotor, CANSparkMax.MotorType.kBrushless);
     private final DigitalInput bottomSensor = new DigitalInput(0);
     private final DigitalInput topSensor = new DigitalInput(1);
 
