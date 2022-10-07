@@ -1,5 +1,19 @@
 package frc.robot.subsystems;
 
-public class DriveSubsystem {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class DriveSubsystem extends SubsystemBase {
     
+    public DriveSubsystem() {
+
+    }
+
+    @Override
+    public void periodic() {
+
+    }
+
+    public void driveStop() {
+        
+    }
 }

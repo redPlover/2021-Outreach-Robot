@@ -35,6 +35,7 @@ public class RobotContainer {
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   Joystick leftStick = new Joystick(0);
   Joystick rightStick = new Joystick(1);
@@ -103,6 +104,13 @@ public class RobotContainer {
         .whenReleased(
           new InstantCommand(intakeSubsystem::intakeStop, intakeSubsystem)
         );
+
+      // Deadband switch
+      new JoystickButton(gamepad, Button.kA.value)
+        .whenPressed(
+          new InstantCommand(DriveSubsystem::driveStop, driveSubsystem))
+        .whenReleased(
+          new InstantCommand(DriveSubsystem::driveGo, driveSubsystem));
   }
 
 }
